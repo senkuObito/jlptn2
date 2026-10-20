@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JLPT N2 Master — 日本語能力試験 N2</title>
+  <meta name="description" content="Master JLPT N2 with comprehensive kanji, vocabulary, and listening practice.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎌</text></svg>">
+</head>
+<body>
+
+  <!-- ═══════════ Header ═══════════ -->
+  <header class="app-header">
+    <div class="brand">
+      <div>
+        <div class="logo">🎌 JLPT <span>N2</span> Master</div>
+        <div class="subtitle">日本語能力試験 N2 対策</div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <div class="progress-mini">
+        <span id="progressText">0%</span>
+        <div class="bar"><div class="fill" id="progressFill" style="width:0%"></div></div>
+      </div>
+      <button class="theme-toggle" id="themeToggle" title="Toggle dark mode">🌙</button>
+    </div>
+  </header>
+
+  <!-- ═══════════ Tab Navigation ═══════════ -->
+  <nav class="tab-nav">
+    <button class="tab-btn active" data-tab="kanji">
+      <span class="tab-icon">漢</span> Kanji（漢字）
+    </button>
+    <button class="tab-btn" data-tab="vocab">
+      <span class="tab-icon">語</span> Vocabulary（語彙）
+    </button>
+    <button class="tab-btn" data-tab="listening">
+      <span class="tab-icon">聴</span> Listening（聴解）
+    </button>
+  </nav>
+
+  <!-- ═══════════ Main Content ═══════════ -->
+  <main class="main-container">
+
+    <!-- ─────── Kanji Section ─────── -->
+    <section id="kanji-section" class="section active">
+      <div class="section-header">
+        <h2>漢字 — Kanji</h2>
+        <p>Master the essential kanji for JLPT N2. Click any kanji to see details, readings, and example compounds.</p>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-bar">
+        <div class="stat-card">
+          <div class="stat-value" id="kanjiTotal">0</div>
+          <div class="stat-label">Total Kanji</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="kanjiLearned">0</div>
+          <div class="stat-label">Learned</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="kanjiPercent">0%</div>
+          <div class="stat-label">Progress</div>
+        </div>
+      </div>
+
+      <!-- Toolbar -->
+      <div class="toolbar">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="kanjiSearch" placeholder="Search kanji, meaning, or reading...">
+        </div>
+      </div>
+
+      <!-- Grid -->
+      <div class="kanji-grid" id="kanjiGrid"></div>
+      <div class="empty-state" id="kanjiEmpty" style="display:none">
+        <div class="empty-icon">🔍</div>
+        <p>No kanji found matching your search.</p>
+      </div>
+    </section>
+
+    <!-- ─────── Vocabulary Section ─────── -->
+    <section id="vocab-section" class="section">
+      <div class="section-header">
+        <h2>語彙 — Vocabulary</h2>
+        <p>Study essential N2 vocabulary with meanings, readings, example sentences, and common collocations.</p>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-bar">
+        <div class="stat-card">
+          <div class="stat-value" id="vocabTotal">0</div>
+          <div class="stat-label">Total Words</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="vocabLearned">0</div>
+          <div class="stat-label">Learned</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="vocabPercent">0%</div>
+          <div class="stat-label">Progress</div>
+        </div>
+      </div>
+
+      <!-- Toolbar -->
+      <div class="toolbar">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="vocabSearch" placeholder="Search word, meaning, or reading...">
+        </div>
+        <div class="filter-chips" id="vocabFilters">
+          <button class="chip active" data-filter="all">All</button>
+          <button class="chip" data-filter="noun">Noun</button>
+          <button class="chip" data-filter="verb">Verb</button>
+          <button class="chip" data-filter="adjective-i">i-Adj</button>
+          <button class="chip" data-filter="adjective-na">na-Adj</button>
+          <button class="chip" data-filter="adverb">Adverb</button>
+          <button class="chip" data-filter="conjunction">Conj</button>
+        </div>
+      </div>
+
+      <!-- List -->
+      <div class="vocab-list" id="vocabList"></div>
+      <div class="empty-state" id="vocabEmpty" style="display:none">
+        <div class="empty-icon">🔍</div>
+        <p>No vocabulary found matching your criteria.</p>
+      </div>
+    </section>
+
+    <!-- ─────── Listening Section ─────── -->
+    <section id="listening-section" class="section">
+      <div class="section-header">
+        <h2>聴解 — Listening Practice</h2>
+        <p>Train your ear with realistic JLPT N2 listening comprehension questions. Audio uses browser text-to-speech.</p>
+      </div>
+
+      <div class="listening-container">
+        <!-- Score -->
+        <div class="score-tracker">
+          <div>
+            <div class="score-value" id="listeningScore">0 / 0</div>
+            <div class="score-label">Score</div>
+          </div>
+          <div style="flex:1"></div>
+          <button class="btn btn-sm btn-secondary" id="resetScoreBtn">Reset Score</button>
+        </div>
+
+        <div style="height:20px"></div>
+
+        <!-- Question Card -->
+        <div class="listening-card" id="listeningCard">
+          <div class="q-header">
+            <div class="q-title" id="qTitle">Loading...</div>
+            <span class="q-badge" id="qBadge">-</span>
+          </div>
+
+          <!-- Situation -->
+          <div class="situation" id="qSituation"></div>
+
+          <!-- Audio Player -->
+          <div class="audio-player-area">
+            <button class="play-btn" id="playBtn" title="Play audio">▶</button>
+            <div class="audio-info">
+              <div class="label">Text-to-Speech</div>
+              <div class="status" id="audioStatus">Press play to listen</div>
+            </div>
+            <div class="speed-controls">
+              <button class="speed-btn" data-speed="0.6">0.6×</button>
+              <button class="speed-btn" data-speed="0.8">0.8×</button>
+              <button class="speed-btn active" data-speed="1">1×</button>
+              <button class="speed-btn" data-speed="1.2">1.2×</button>
+            </div>
+          </div>
+
+          <!-- Toggle dialogue transcript -->
+          <button class="btn btn-sm btn-outline" id="toggleDialogue" style="margin-bottom:16px">Show Transcript</button>
+
+          <!-- Dialogue -->
+          <div class="dialogue-box" id="dialogueBox"></div>
+
+          <!-- Question -->
+          <div class="question-area">
+            <div class="question-text" id="qText"></div>
+            <div class="question-text-en" id="qTextEn"></div>
+          </div>
+
+          <!-- Answer Options -->
+          <div class="answer-options" id="answerOptions"></div>
+
+          <!-- Explanation -->
+          <div class="explanation-box" id="explanationBox">
+            <h4>💡 Explanation</h4>
+            <p id="explanationText"></p>
+          </div>
+
+          <!-- Navigation -->
+          <div class="listening-nav">
+            <button class="btn btn-sm btn-secondary" id="prevBtn">← Previous</button>
+            <span class="q-counter" id="qCounter">1 / 20</span>
+            <button class="btn btn-sm btn-primary" id="nextBtn">Next →</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══════════ Kanji Detail Modal ═══════════ -->
+  <div class="modal-overlay" id="kanjiModal">
+    <div class="modal">
+      <button class="modal-close" id="modalClose">✕</button>
+      <div class="kanji-large" id="modalKanji"></div>
+
+      <div class="detail-row">
+        <div class="detail-label">Meaning</div>
+        <div class="detail-value" id="modalMeaning"></div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">ON Reading</div>
+        <div class="detail-value" id="modalOn"></div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">KUN Reading</div>
+        <div class="detail-value" id="modalKun"></div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">Strokes</div>
+        <div class="detail-value" id="modalStrokes"></div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">Radical</div>
+        <div class="detail-value" id="modalRadical"></div>
+      </div>
+
+      <h4 style="margin-top:20px; color:var(--maroon); font-size:.95rem">Example Compounds</h4>
+      <ul class="compounds-list" id="modalCompounds"></ul>
+
+      <div class="hint-box" id="modalHint">
+        <strong>💡 Memory Hint:</strong> <span id="modalHintText"></span>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-primary" id="modalLearnBtn">✓ Mark as Learned</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ Toast ═══════════ -->
+  <div class="toast" id="toast"></div>
+
+  <!-- ═══════════ Scripts ═══════════ -->
+  <script src="js/kanji-data.js"></script>
+  <script src="js/vocab-data.js"></script>
+  <script src="js/listening.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>
